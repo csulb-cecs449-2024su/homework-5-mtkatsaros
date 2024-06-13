@@ -59,7 +59,7 @@ Scene bunnyTextured() {
 // A scene of a textured triangle.
 Scene triangle() {
 	StbImage wall;
-	wall.loadFromFile("models/wall.jpg");
+	wall.loadFromFile("models/chainlink.jpeg");
 
 	auto triangle = Object3D(std::make_shared<Mesh3D>(Mesh3D::triangle(wall)));
 	triangle.move(glm::vec3(0, 0, -2));
@@ -86,7 +86,7 @@ int main() {
 
 	gladLoadGL();
 	// Draw in wireframe mode for now.
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 
 	// Inintialize scene objects.
