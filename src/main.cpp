@@ -32,7 +32,9 @@ struct Scene {
 ShaderProgram textureShader() {
 	ShaderProgram shader;
 	try {
-		shader.load("shaders/texture_perspective.vert", "shaders/texturing.frag");
+		//shader.load("shaders/texture_perspective.vert", "shaders/texturing.frag");
+		shader.load("shaders/texture_perspective.vert", "shaders/texture_inverted.frag");
+
 	}
 	catch (std::runtime_error& e) {
 		std::cout << "ERROR: " << e.what() << std::endl;
@@ -86,11 +88,15 @@ int main() {
 
 	gladLoadGL();
 	// Draw in wireframe mode for now.
+	//found this to make the texture that is at the "front" of the bunny override the 
+	//texture of the "back" of the bunny: https://learnopengl.com/Advanced-OpenGL/Depth-testing
+	glEnable(GL_DEPTH_TEST);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 
 	// Inintialize scene objects.
-	auto myScene = triangle();
+	//auto myScene = triangle();
+	auto myScene = bunnyTextured();
 	auto& obj = myScene.objects[0];
 
 	// Activate the shader program.
@@ -117,11 +123,11 @@ int main() {
 		}
 		auto now = c.getElapsedTime();
 		auto diff = now - last;
-		//std::cout << 1 / diff.asSeconds() << " FPS " << std::endl;
+		std::cout << 1 / diff.asSeconds() << " FPS " << std::endl;
 		last = now;
 
 		// Update the scene.
-		// obj.rotate(glm::vec3(0, 0.0002, 0));
+		obj.rotate(glm::vec3(0, 0.0002, 0));
 
 		// Clear the OpenGL "context".
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
